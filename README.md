@@ -1,8 +1,21 @@
-# MCP Memory Service
+# ⚠️ ARCHIVED: ChromaDB Legacy Branch
+
+> **This branch contains the final ChromaDB code before removal in v8.0.0**
+>
+> - **Status**: Frozen/Archived - No active maintenance
+> - **Purpose**: Historical reference only
+> - **Removed**: v8.0.0 (ChromaDB backend completely removed)
+> - **Migration**: See [main branch](https://github.com/doobidoo/mcp-memory-service) for migration guide to Hybrid/SQLite-vec/Cloudflare backends
+>
+> **For current version, visit**: [Main Branch](https://github.com/doobidoo/mcp-memory-service/tree/main)
+
+---
+
+# MCP Memory Service (ChromaDB Legacy)
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub stars](https://img.shields.io/github/stars/doobidoo/mcp-memory-service?style=social)](https://github.com/doobidoo/mcp-memory-service/stargazers)
-[![Production Ready](https://img.shields.io/badge/Production-Ready-brightgreen?style=flat&logo=checkmark)](https://github.com/doobidoo/mcp-memory-service#-in-production)
+[![Archived](https://img.shields.io/badge/Status-Archived-orange?style=flat)](https://github.com/doobidoo/mcp-memory-service/tree/chromadb-legacy)
 
 [![Works with Claude](https://img.shields.io/badge/Works%20with-Claude-blue)](https://claude.ai)
 [![Works with Cursor](https://img.shields.io/badge/Works%20with-Cursor-orange)](https://cursor.sh)
