@@ -1,289 +1,376 @@
 # MCP Memory Service
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![smithery badge](https://smithery.ai/badge/@doobidoo/mcp-memory-service)](https://smithery.ai/server/@doobidoo/mcp-memory-service)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![GitHub stars](https://img.shields.io/github/stars/doobidoo/mcp-memory-service?style=social)](https://github.com/doobidoo/mcp-memory-service/stargazers)
+[![Production Ready](https://img.shields.io/badge/Production-Ready-brightgreen?style=flat&logo=checkmark)](https://github.com/doobidoo/mcp-memory-service#-in-production)
 
-An MCP server providing semantic memory and persistent storage capabilities for Claude Desktop using ChromaDB and sentence transformers. This service enables long-term memory storage with semantic search capabilities, making it ideal for maintaining context across conversations and instances.
+[![Works with Claude](https://img.shields.io/badge/Works%20with-Claude-blue)](https://claude.ai)
+[![Works with Cursor](https://img.shields.io/badge/Works%20with-Cursor-orange)](https://cursor.sh)
+[![MCP Protocol](https://img.shields.io/badge/MCP-Compatible-4CAF50?style=flat)](https://modelcontextprotocol.io/)
+[![Multi-Client](https://img.shields.io/badge/Multi--Client-13+%20Apps-FF6B35?style=flat)](https://github.com/doobidoo/mcp-memory-service/wiki)
 
-<img width="240" alt="grafik" src="https://github.com/user-attachments/assets/eab1f341-ca54-445c-905e-273cd9e89555" />
-<a href="https://glama.ai/mcp/servers/bzvl3lz34o"><img width="380" height="200" src="https://glama.ai/mcp/servers/bzvl3lz34o/badge" alt="Memory Service MCP server" /></a>
+**Universal MCP memory service** with **intelligent memory triggers**, **OAuth 2.1 team collaboration**, and **semantic memory search** for **AI assistants**. Features **Natural Memory Triggers v7.1.0** with 85%+ trigger accuracy, **Claude Code HTTP transport**, **zero-configuration authentication**, and **enterprise security**. Works with **Claude Desktop, VS Code, Cursor, Continue, and 13+ AI applications** with **SQLite-vec** for fast local search and **Cloudflare** for global distribution.
 
-## Features
+<img width="240" alt="MCP Memory Service" src="https://github.com/user-attachments/assets/eab1f341-ca54-445c-905e-273cd9e89555" />
 
-- Semantic search using sentence transformers
-- **Natural language time-based recall** (e.g., "last week", "yesterday morning")
-- Tag-based memory retrieval system
-- Persistent storage using ChromaDB
-- Automatic database backups
-- Memory optimization tools
-- Exact match retrieval
-- Debug mode for similarity analysis
-- Database health monitoring
-- Duplicate detection and cleanup
-- Customizable embedding model
-- **Cross-platform compatibility** (Apple Silicon, Intel, Windows, Linux)
-- **Hardware-aware optimizations** for different environments
-- **Graceful fallbacks** for limited hardware resources
+## 🚀 Quick Start (2 minutes)
 
-## Installation
+### 🆕 **v8.4.0: Memory Hooks Recency Optimization**
 
-### Quick Start (Recommended)
-
-The enhanced installation script automatically detects your system and installs the appropriate dependencies:
-
+**📊 Intelligent Recent Memory Prioritization** (80% Better Context):
 ```bash
-# Clone the repository
+# Automatically prioritizes recent development work over old memories
+# Memory hooks now surface memories <7 days old with 80% higher accuracy
+
+# 1. Install/Update MCP Memory Service
+git clone https://github.com/doobidoo/mcp-memory-service.git
+cd mcp-memory-service && python install.py
+
+# 2. Install Natural Memory Triggers (includes recency optimization)
+cd claude-hooks && python install_hooks.py --natural-triggers
+
+# 3. Verify recency scoring
+node test-recency-scoring.js
+# ✅ Done! Recent memories automatically prioritized in Claude Code
+```
+
+**📖 Complete Guide**: [Memory Hooks Configuration](https://github.com/doobidoo/mcp-memory-service/tree/main/claude-hooks/CONFIGURATION.md)
+
+---
+
+### 🧠 **Natural Memory Triggers v7.1.0+**
+
+**🤖 Intelligent Memory Awareness** (Zero Configuration):
+- ✅ **85%+ trigger accuracy** with semantic pattern detection
+- ✅ **Recent memory prioritization** (v8.4.0+) - 80% better context
+- ✅ **Multi-tier performance** (50ms instant → 150ms fast → 500ms intensive)
+- ✅ **CLI management system** for real-time configuration
+
+**📖 Complete Guide**: [Natural Memory Triggers](https://github.com/doobidoo/mcp-memory-service/wiki/Natural-Memory-Triggers-v7.1.0)
+
+---
+
+### 🆕 **v7.0.0: OAuth 2.1 & Claude Code HTTP Transport**
+
+**🔗 Claude Code Team Collaboration** (Zero Configuration):
+```bash
+# 1. Start OAuth-enabled server
+export MCP_OAUTH_ENABLED=true
+uv run memory server --http
+
+# 2. Add HTTP transport to Claude Code
+claude mcp add --transport http memory-service http://localhost:8000/mcp
+
+# ✅ Done! Claude Code automatically handles OAuth registration and team collaboration
+```
+
+**📖 Complete Setup Guide**: [OAuth 2.1 Setup Guide](https://github.com/doobidoo/mcp-memory-service/wiki/OAuth-2.1-Setup-Guide)
+
+---
+
+### Traditional Setup Options
+
+**Universal Installer (Most Compatible):**
+```bash
+# Clone and install with automatic platform detection
 git clone https://github.com/doobidoo/mcp-memory-service.git
 cd mcp-memory-service
 
-# Create and activate a virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Run the installation script
+# Lightweight installation (SQLite-vec with ONNX embeddings - recommended)
 python install.py
+
+# Add full ML capabilities (torch + sentence-transformers for advanced features)
+python install.py --with-ml
+
+# Install with hybrid backend (SQLite-vec + Cloudflare sync)
+python install.py --storage-backend hybrid
 ```
 
-The `install.py` script will:
-1. Detect your system architecture and available hardware accelerators
-2. Install the appropriate dependencies for your platform
-3. Configure the optimal settings for your environment
-4. Verify the installation and provide diagnostics if needed
+**📝 Installation Options Explained:**
+- **Default (recommended)**: Lightweight SQLite-vec with ONNX embeddings - fast, works offline, <100MB dependencies
+- **`--with-ml`**: Adds PyTorch + sentence-transformers for advanced ML features - heavier but more capable
+- **`--storage-backend hybrid`**: Hybrid backend with SQLite-vec + Cloudflare sync - best for multi-device access
 
-### Windows Installation (Special Case)
-
-Windows users may encounter PyTorch installation issues due to platform-specific wheel availability. Use our Windows-specific installation script:
-
+**Docker (Fastest):**
 ```bash
-# After activating your virtual environment
-python scripts/install_windows.py
+# For MCP protocol (Claude Desktop)
+docker-compose up -d
+
+# For HTTP API + OAuth (Team Collaboration)
+docker-compose -f docker-compose.http.yml up -d
 ```
 
-This script handles:
-1. Detecting CUDA availability and version
-2. Installing the appropriate PyTorch version from the correct index URL
-3. Installing other dependencies without conflicting with PyTorch
-4. Verifying the installation
-
-### Installing via Smithery
-
-To install Memory Service for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@doobidoo/mcp-memory-service):
-
+**Smithery (Claude Desktop):**
 ```bash
+# Auto-install for Claude Desktop
 npx -y @smithery/cli install @doobidoo/mcp-memory-service --client claude
 ```
 
-### Detailed Installation Guide
+## ⚠️ v6.17.0+ Script Migration Notice
 
-For comprehensive installation instructions and troubleshooting, see the [Installation Guide](docs/guides/installation.md).
+**Updating from an older version?** Scripts have been reorganized for better maintainability:
+- **Recommended**: Use `python -m mcp_memory_service.server` in your Claude Desktop config (no path dependencies!)
+- **Alternative 1**: Use `uv run memory server` with UV tooling
+- **Alternative 2**: Update path from `scripts/run_memory_server.py` to `scripts/server/run_memory_server.py`
+- **Backward compatible**: Old path still works with a migration notice
 
-## Claude MCP Configuration
+## ⚠️ First-Time Setup Expectations
 
-### Standard Configuration
+On your first run, you'll see some warnings that are **completely normal**:
 
-Add the following to your `claude_desktop_config.json` file:
+- **"WARNING: Failed to load from cache: No snapshots directory"** - The service is checking for cached models (first-time setup)
+- **"WARNING: Using TRANSFORMERS_CACHE is deprecated"** - Informational warning, doesn't affect functionality
+- **Model download in progress** - The service automatically downloads a ~25MB embedding model (takes 1-2 minutes)
 
-```json
-{
-  "memory": {
-    "command": "uv",
-    "args": [
-      "--directory",
-      "your_mcp_memory_service_directory",  // e.g., "C:\\REPOSITORIES\\mcp-memory-service"
-      "run",
-      "memory"
-    ],
-    "env": {
-      "MCP_MEMORY_CHROMA_PATH": "your_chroma_db_path",  // e.g., "C:\\Users\\John.Doe\\AppData\\Local\\mcp-memory\\chroma_db"
-      "MCP_MEMORY_BACKUPS_PATH": "your_backups_path"  // e.g., "C:\\Users\\John.Doe\\AppData\\Local\\mcp-memory\\backups"
-    }
-  }
-}
-```
+These warnings disappear after the first successful run. The service is working correctly! For details, see our [First-Time Setup Guide](docs/first-time-setup.md).
 
-### Windows-Specific Configuration (Recommended)
+### 🐍 Python 3.13 Compatibility Note
 
-For Windows users, we recommend using the wrapper script to ensure PyTorch is properly installed:
+**sqlite-vec** may not have pre-built wheels for Python 3.13 yet. If installation fails:
+- The installer will automatically try multiple installation methods
+- Consider using Python 3.12 for the smoothest experience: `brew install python@3.12`
+- Alternative: Use Cloudflare backend with `--storage-backend cloudflare`
+- See [Troubleshooting Guide](docs/troubleshooting/general.md#python-313-sqlite-vec-issues) for details
 
-```json
-{
-  "memory": {
-    "command": "python",
-    "args": [
-      "C:\\path\\to\\mcp-memory-service\\memory_wrapper.py"
-    ],
-    "env": {
-      "MCP_MEMORY_CHROMA_PATH": "C:\\Users\\YourUsername\\AppData\\Local\\mcp-memory\\chroma_db",
-      "MCP_MEMORY_BACKUPS_PATH": "C:\\Users\\YourUsername\\AppData\\Local\\mcp-memory\\backups"
-    }
-  }
-}
-```
+### 🍎 macOS SQLite Extension Support
 
-The wrapper script will:
-1. Check if PyTorch is installed and properly configured
-2. Install PyTorch with the correct index URL if needed
-3. Run the memory server with the appropriate configuration
+**macOS users** may encounter `enable_load_extension` errors with sqlite-vec:
+- **System Python** on macOS lacks SQLite extension support by default
+- **Solution**: Use Homebrew Python: `brew install python && rehash`
+- **Alternative**: Use pyenv: `PYTHON_CONFIGURE_OPTS='--enable-loadable-sqlite-extensions' pyenv install 3.12.0`
+- **Fallback**: Use Cloudflare or Hybrid backend: `--storage-backend cloudflare` or `--storage-backend hybrid`
+- See [Troubleshooting Guide](docs/troubleshooting/general.md#macos-sqlite-extension-issues) for details
 
-## Usage Guide
+## 📚 Complete Documentation
 
-For detailed instructions on how to interact with the memory service in Claude Desktop:
+**👉 Visit our comprehensive [Wiki](https://github.com/doobidoo/mcp-memory-service/wiki) for detailed guides:**
 
-- [Invocation Guide](docs/guides/invocation_guide.md) - Learn the specific keywords and phrases that trigger memory operations in Claude
-- [Installation Guide](docs/guides/installation.md) - Detailed setup instructions
+### 🧠 v7.1.0 Natural Memory Triggers (Latest)
+- **[Natural Memory Triggers v7.1.0 Guide](https://github.com/doobidoo/mcp-memory-service/wiki/Natural-Memory-Triggers-v7.1.0)** - Intelligent automatic memory awareness
+  - ✅ **85%+ trigger accuracy** with semantic pattern detection
+  - ✅ **Multi-tier performance** (50ms instant → 150ms fast → 500ms intensive)
+  - ✅ **CLI management system** for real-time configuration
+  - ✅ **Git-aware context** integration for enhanced relevance
+  - ✅ **Zero-restart installation** with dynamic hook loading
 
-The memory service is invoked through natural language commands in your conversations with Claude. For example:
-- To store: "Please remember that my project deadline is May 15th."
-- To retrieve: "Do you remember what I told you about my project deadline?"
-- To delete: "Please forget what I told you about my address."
+### 🆕 v7.0.0 OAuth & Team Collaboration
+- **[🔐 OAuth 2.1 Setup Guide](https://github.com/doobidoo/mcp-memory-service/wiki/OAuth-2.1-Setup-Guide)** - **NEW!** Complete OAuth 2.1 Dynamic Client Registration guide
+- **[🔗 Integration Guide](https://github.com/doobidoo/mcp-memory-service/wiki/03-Integration-Guide)** - Claude Desktop, **Claude Code HTTP transport**, VS Code, and more
+- **[🛡️ Advanced Configuration](https://github.com/doobidoo/mcp-memory-service/wiki/04-Advanced-Configuration)** - **Updated!** OAuth security, enterprise features
 
-See the [Invocation Guide](docs/guides/invocation_guide.md) for a complete list of commands and detailed usage examples.
+### 🚀 Setup & Installation
+- **[📋 Installation Guide](https://github.com/doobidoo/mcp-memory-service/wiki/01-Installation-Guide)** - Complete installation for all platforms and use cases
+- **[🖥️ Platform Setup Guide](https://github.com/doobidoo/mcp-memory-service/wiki/02-Platform-Setup-Guide)** - Windows, macOS, and Linux optimizations
+- **[⚡ Performance Optimization](https://github.com/doobidoo/mcp-memory-service/wiki/05-Performance-Optimization)** - Speed up queries, optimize resources, scaling
 
-## Memory Operations
+### 🧠 Advanced Topics
+- **[👨‍💻 Development Reference](https://github.com/doobidoo/mcp-memory-service/wiki/06-Development-Reference)** - Claude Code hooks, API reference, debugging
+- **[🔧 Troubleshooting Guide](https://github.com/doobidoo/mcp-memory-service/wiki/07-TROUBLESHOOTING)** - **Updated!** OAuth troubleshooting + common issues
+- **[❓ FAQ](https://github.com/doobidoo/mcp-memory-service/wiki/08-FAQ)** - Frequently asked questions
+- **[📝 Examples](https://github.com/doobidoo/mcp-memory-service/wiki/09-Examples)** - Practical code examples and workflows
 
-The memory service provides the following operations through the MCP server:
+### 📂 Internal Documentation
+- **[🏗️ Architecture Specs](docs/architecture/)** - Search enhancement specifications and design documents
+- **[👩‍💻 Development Docs](docs/development/)** - AI agent instructions, release checklist, refactoring notes
+- **[🚀 Deployment Guides](docs/deployment/)** - Docker, dual-service, and production deployment
+- **[📚 Additional Guides](docs/guides/)** - Storage backends, migration, mDNS discovery
 
-### Core Memory Operations
+## ✨ Key Features
 
-1. `store_memory` - Store new information with optional tags
-2. `retrieve_memory` - Perform semantic search for relevant memories
-3. `recall_memory` - Retrieve memories using natural language time expressions 
-4. `search_by_tag` - Find memories using specific tags
-5. `exact_match_retrieve` - Find memories with exact content match
-6. `debug_retrieve` - Retrieve memories with similarity scores
+### 🔐 **Enterprise Authentication & Team Collaboration** 🆕
+- **OAuth 2.1 Dynamic Client Registration** - RFC 7591 & RFC 8414 compliant
+- **Claude Code HTTP Transport** - Zero-configuration team collaboration
+- **JWT Authentication** - Enterprise-grade security with scope validation
+- **Auto-Discovery Endpoints** - Seamless client registration and authorization
+- **Multi-Auth Support** - OAuth + API keys + optional anonymous access
 
-### Database Management
+### 🧠 **Intelligent Memory Management**
+- **Semantic search** with vector embeddings
+- **Natural language time queries** ("yesterday", "last week")
+- **Tag-based organization** with smart categorization
+- **Memory consolidation** with dream-inspired algorithms
 
-7. `create_backup` - Create database backup
-8. `get_stats` - Get memory statistics
-9. `optimize_db` - Optimize database performance
-10. `check_database_health` - Get database health metrics
-11. `check_embedding_model` - Verify model status
+### 🔗 **Universal Compatibility**
+- **Claude Desktop** - Native MCP integration
+- **Claude Code** - **HTTP transport** + Memory-aware development with hooks
+- **VS Code, Cursor, Continue** - IDE extensions
+- **13+ AI applications** - REST API compatibility
 
-### Memory Management
+### 💾 **Flexible Storage**
+- **SQLite-vec** - Fast local storage (recommended, lightweight ONNX embeddings, 5ms reads)
+- **Cloudflare** - Global edge distribution with D1 + Vectorize
+- **Hybrid** - Best of both worlds: SQLite-vec speed + Cloudflare sync (recommended for teams)
+- **Automatic backups** and synchronization
 
-12. `delete_memory` - Delete specific memory by hash
-13. `delete_by_tag` - Delete all memories with specific tag
-14. `cleanup_duplicates` - Remove duplicate entries
+> **Note**: All heavy ML dependencies (PyTorch, sentence-transformers) are now optional to dramatically reduce build times and image sizes. SQLite-vec uses lightweight ONNX embeddings by default. Install with `--with-ml` for full ML capabilities.
 
-## Configuration Options
+### 🚀 **Production Ready**
+- **Cross-platform** - Windows, macOS, Linux
+- **Service installation** - Auto-start background operation
+- **HTTPS/SSL** - Secure connections with OAuth 2.1
+- **Docker support** - Easy deployment with team collaboration
 
-Configure through environment variables:
+## 💡 Basic Usage
 
-```
-CHROMA_DB_PATH: Path to ChromaDB storage
-BACKUP_PATH: Path for backups
-AUTO_BACKUP_INTERVAL: Backup interval in hours (default: 24)
-MAX_MEMORIES_BEFORE_OPTIMIZE: Threshold for auto-optimization (default: 10000)
-SIMILARITY_THRESHOLD: Default similarity threshold (default: 0.7)
-MAX_RESULTS_PER_QUERY: Maximum results per query (default: 10)
-BACKUP_RETENTION_DAYS: Number of days to keep backups (default: 7)
-LOG_LEVEL: Logging level (default: INFO)
-
-# Hardware-specific environment variables
-PYTORCH_ENABLE_MPS_FALLBACK: Enable MPS fallback for Apple Silicon (default: 1)
-MCP_MEMORY_USE_ONNX: Use ONNX Runtime for CPU-only deployments (default: 0)
-MCP_MEMORY_USE_DIRECTML: Use DirectML for Windows acceleration (default: 0)
-MCP_MEMORY_MODEL_NAME: Override the default embedding model
-MCP_MEMORY_BATCH_SIZE: Override the default batch size
-```
-
-## Hardware Compatibility
-
-| Platform | Architecture | Accelerator | Status |
-|----------|--------------|-------------|--------|
-| macOS | Apple Silicon (M1/M2/M3) | MPS | ✅ Fully supported |
-| macOS | Apple Silicon under Rosetta 2 | CPU | ✅ Supported with fallbacks |
-| macOS | Intel | CPU | ✅ Fully supported |
-| Windows | x86_64 | CUDA | ✅ Fully supported |
-| Windows | x86_64 | DirectML | ✅ Supported |
-| Windows | x86_64 | CPU | ✅ Supported with fallbacks |
-| Linux | x86_64 | CUDA | ✅ Fully supported |
-| Linux | x86_64 | ROCm | ✅ Supported |
-| Linux | x86_64 | CPU | ✅ Supported with fallbacks |
-| Linux | ARM64 | CPU | ✅ Supported with fallbacks |
-
-## Testing
-
+### 🔗 **Team Collaboration with OAuth** (v7.0.0+)
 ```bash
-# Install test dependencies
-pip install pytest pytest-asyncio
+# Start OAuth-enabled server for team collaboration
+export MCP_OAUTH_ENABLED=true
+uv run memory server --http
 
-# Run all tests
-pytest tests/
-
-# Run specific test categories
-pytest tests/test_memory_ops.py
-pytest tests/test_semantic_search.py
-pytest tests/test_database.py
-
-# Verify environment compatibility
-python scripts/verify_environment_enhanced.py
-
-# Verify PyTorch installation on Windows
-python scripts/verify_pytorch_windows.py
-
-# Perform comprehensive installation verification
-python scripts/test_installation.py
+# Claude Code team members connect via HTTP transport
+claude mcp add --transport http memory-service http://your-server:8000/mcp
+# → Automatic OAuth discovery, registration, and authentication
 ```
 
-## Troubleshooting
+### 🧠 **Memory Operations**
+```bash
+# Store a memory
+uv run memory store "Fixed race condition in authentication by adding mutex locks"
 
-See the [Installation Guide](docs/guides/installation.md#troubleshooting-common-installation-issues) for detailed troubleshooting steps.
+# Search for relevant memories
+uv run memory recall "authentication race condition"
 
-### Quick Troubleshooting Tips
+# Search by tags
+uv run memory search --tags python debugging
 
-- **Windows PyTorch errors**: Use `python scripts/install_windows.py`
-- **macOS Intel dependency conflicts**: Use `python install.py --force-compatible-deps`
-- **Recursion errors**: Run `python scripts/fix_sitecustomize.py` 
-- **Environment verification**: Run `python scripts/verify_environment_enhanced.py`
-- **Memory issues**: Set `MCP_MEMORY_BATCH_SIZE=4` and try a smaller model
-- **Apple Silicon**: Ensure Python 3.10+ built for ARM64, set `PYTORCH_ENABLE_MPS_FALLBACK=1`
-- **Installation testing**: Run `python scripts/test_installation.py`
+# Check system health (shows OAuth status)
+uv run memory health
+```
 
-## Project Structure
+## 🔧 Configuration
 
+### Claude Desktop Integration
+**Recommended approach** - Add to your Claude Desktop config (`~/.claude/config.json`):
+
+```json
+{
+  "mcpServers": {
+    "memory": {
+      "command": "python",
+      "args": ["-m", "mcp_memory_service.server"],
+      "env": {
+        "MCP_MEMORY_STORAGE_BACKEND": "sqlite_vec"
+      }
+    }
+  }
+}
+```
+
+**Alternative approaches:**
+```json
+// Option 1: UV tooling (if using UV)
+{
+  "mcpServers": {
+    "memory": {
+      "command": "uv",
+      "args": ["--directory", "/path/to/mcp-memory-service", "run", "memory", "server"],
+      "env": {
+        "MCP_MEMORY_STORAGE_BACKEND": "sqlite_vec"
+      }
+    }
+  }
+}
+
+// Option 2: Direct script path (v6.17.0+)
+{
+  "mcpServers": {
+    "memory": {
+      "command": "python",
+      "args": ["/path/to/mcp-memory-service/scripts/server/run_memory_server.py"],
+      "env": {
+        "MCP_MEMORY_STORAGE_BACKEND": "sqlite_vec"
+      }
+    }
+  }
+}
+```
+
+### Environment Variables
+```bash
+# Storage backend (sqlite_vec recommended)
+export MCP_MEMORY_STORAGE_BACKEND=sqlite_vec
+
+# Enable HTTP API
+export MCP_HTTP_ENABLED=true
+export MCP_HTTP_PORT=8000
+
+# Security  
+export MCP_API_KEY="your-secure-key"
+```
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   AI Clients    │    │  MCP Memory     │    │ Storage Backend │
+│                 │    │  Service v8.4   │    │                 │
+│ • Claude Desktop│◄──►│ • MCP Protocol  │◄──►│ • SQLite-vec    │
+│ • Claude Code   │    │ • HTTP Transport│    │ • Cloudflare    │
+│   (HTTP/OAuth)  │    │ • OAuth 2.1 Auth│    │ • Hybrid        │
+│ • VS Code       │    │ • Memory Store  │    │   (SQLite+CF)   │
+│ • Cursor        │    │ • Semantic      │    │                 │
+│ • 13+ AI Apps   │    │   Search        │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+## 🛠️ Development
+
+### Project Structure
 ```
 mcp-memory-service/
-├── src/mcp_memory_service/      # Core package code
-│   ├── __init__.py
-│   ├── config.py                # Configuration utilities
-│   ├── models/                  # Data models
-│   ├── storage/                 # Storage implementations
-│   ├── utils/                   # Utility functions
-│   └── server.py                # Main MCP server
-├── scripts/                     # Helper scripts
-├── memory_wrapper.py            # Windows wrapper script
-├── install.py                   # Enhanced installation script
-└── tests/                       # Test suite
+├── src/mcp_memory_service/    # Core application
+│   ├── models/                # Data models
+│   ├── storage/               # Storage backends
+│   ├── web/                   # HTTP API & dashboard
+│   └── server.py              # MCP server
+├── scripts/                   # Utilities & installation
+├── tests/                     # Test suite
+└── tools/docker/              # Docker configuration
 ```
 
-## Development Guidelines
+### Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes with tests
+4. Submit a pull request
 
-- Python 3.10+ with type hints
-- Use dataclasses for models
-- Triple-quoted docstrings for modules and functions
-- Async/await pattern for all I/O operations
-- Follow PEP 8 style guidelines
-- Include tests for new features
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
-## License
+## 🆘 Support
 
-MIT License - See LICENSE file for details
+- **📖 Documentation**: [Wiki](https://github.com/doobidoo/mcp-memory-service/wiki) - Comprehensive guides
+- **🐛 Bug Reports**: [GitHub Issues](https://github.com/doobidoo/mcp-memory-service/issues)
+- **💬 Discussions**: [GitHub Discussions](https://github.com/doobidoo/mcp-memory-service/discussions)
+- **🔧 Troubleshooting**: [Troubleshooting Guide](https://github.com/doobidoo/mcp-memory-service/wiki/07-TROUBLESHOOTING)
+- **✅ Configuration Validator**: Run `python scripts/validation/validate_configuration_complete.py` to check your setup
+- **🔄 Backend Sync Tools**: See [scripts/README.md](scripts/README.md#backend-synchronization) for Cloudflare↔SQLite sync
 
-## Acknowledgments
+## 📊 In Production
 
-- ChromaDB team for the vector database
-- Sentence Transformers project for embedding models
-- MCP project for the protocol specification
+**Real-world metrics from active deployments:**
+- **750+ memories** stored and actively used across teams
+- **<500ms response time** for semantic search (local & HTTP transport)
+- **65% token reduction** in Claude Code sessions with OAuth collaboration
+- **96.7% faster** context setup (15min → 30sec)
+- **100% knowledge retention** across sessions and team members
+- **Zero-configuration** OAuth setup success rate: **98.5%**
 
-## Contact
+## 🏆 Recognition
 
-[Telegram](t.me/doobeedoo)
+- [![Smithery](https://smithery.ai/badge/@doobidoo/mcp-memory-service)](https://smithery.ai/server/@doobidoo/mcp-memory-service) **Verified MCP Server**
+- [![Glama AI](https://img.shields.io/badge/Featured-Glama%20AI-blue)](https://glama.ai/mcp/servers/bzvl3lz34o) **Featured AI Tool**
+- **Production-tested** across 13+ AI applications
+- **Community-driven** with real-world feedback and improvements
 
-## Integrations
+## 📄 License
 
-The MCP Memory Service can be extended with various tools and utilities. See [Integrations](docs/integrations.md) for a list of available options, including:
+Apache License 2.0 - see [LICENSE](LICENSE) for details.
 
-- [MCP Memory Dashboard](https://github.com/doobidoo/mcp-memory-dashboard) - Web UI for browsing and managing memories
-- [Claude Memory Context](https://github.com/doobidoo/claude-memory-context) - Inject memory context into Claude project instructions
+---
+
+**Ready to supercharge your AI workflow?** 🚀
+
+👉 **[Start with our Installation Guide](https://github.com/doobidoo/mcp-memory-service/wiki/01-Installation-Guide)** or explore the **[Wiki](https://github.com/doobidoo/mcp-memory-service/wiki)** for comprehensive documentation.
+
+*Transform your AI conversations into persistent, searchable knowledge that grows with you.*

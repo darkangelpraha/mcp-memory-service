@@ -1,3 +1,17 @@
+# Copyright 2024 Heinrich Krupp
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """
 Natural language time expression parser for MCP Memory Service.
 
@@ -78,6 +92,19 @@ def parse_time_expression(query: str) -> Tuple[Optional[float], Optional[float]]
             start_ts, _ = parse_time_expression(start_expr)
             _, end_ts = parse_time_expression(end_expr)
             return start_ts, end_ts
+        
+        # Check for full ISO dates (YYYY-MM-DD) FIRST
+        full_date_match = PATTERNS["full_date"].search(query)
+        if full_date_match:
+            year, month, day = full_date_match.groups()
+            try:
+                specific_date = date(int(year), int(month), int(day))
+                start_dt = datetime.combine(specific_date, time.min)
+                end_dt = datetime.combine(specific_date, time.max)
+                return start_dt.timestamp(), end_dt.timestamp()
+            except ValueError as e:
+                logger.warning(f"Invalid date: {e}")
+                return None, None
             
         # Check for specific dates (MM/DD/YYYY)
         specific_date_match = PATTERNS["specific_date"].search(query)
@@ -93,19 +120,6 @@ def parse_time_expression(query: str) -> Tuple[Optional[float], Optional[float]]
                 
             try:
                 specific_date = date(year, month, day)
-                start_dt = datetime.combine(specific_date, time.min)
-                end_dt = datetime.combine(specific_date, time.max)
-                return start_dt.timestamp(), end_dt.timestamp()
-            except ValueError as e:
-                logger.warning(f"Invalid date: {e}")
-                return None, None
-        
-        # Check for full ISO dates (YYYY-MM-DD)
-        full_date_match = PATTERNS["full_date"].search(query)
-        if full_date_match:
-            year, month, day = full_date_match.groups()
-            try:
-                specific_date = date(int(year), int(month), int(day))
                 start_dt = datetime.combine(specific_date, time.min)
                 end_dt = datetime.combine(specific_date, time.max)
                 return start_dt.timestamp(), end_dt.timestamp()

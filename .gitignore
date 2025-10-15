@@ -1,6 +1,12 @@
 # Aider files
 .aider.*
 
+# Private/sensitive documents
+docs/saas-monetization-strategy.md
+
+# Local memory exports (contain sensitive data)
+local_export*.json
+
 # Python
 __pycache__/
 *.py[cod]
@@ -13,6 +19,8 @@ env/
 .venv/
 venv/
 py310_venv/
+venv_py310/
+.uv/
 build/
 develop-eggs/
 dist/
@@ -35,7 +43,12 @@ __pypackages__/
 
 # Virtual Environment activation files (redundant due to .venv/ but explicit if needed)
 .env
-.env.*
+.env.local
+.env.development
+.env.test
+.env.production
+# But include template files
+!.env.example
 
 # IDEs & Editors
 .idea/
@@ -55,6 +68,12 @@ __pypackages__/
 chroma_db/
 tests/test_db/chroma.sqlite3
 
+# SQLite-vec artifacts
+*.sqlite
+*.sqlite-*
+.mcp_memory_sqlite/
+.mcp_memory_chroma/
+
 # Project-specific artifacts
 backups/
 test_output.txt
@@ -73,6 +92,20 @@ claude_config/claude_desktop_config.json
 *.tmp
 *.old
 
+# Test and development artifacts
+test_*.py.backup
+*_test.py.old
+development_notes.md
+
+# Temporary MCP test files
+/tmp/test_mcp*.py
+test_mcp*.py
+debug_mcp*.py
+
+# Migration artifacts
+migration_*.log
+deploy_test*.sh
+
 # Optional: VSCode debugging & Python caches
 *.coverage
 coverage.*
@@ -83,3 +116,37 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
+claude_config/claude_desktop_config.json
+.claude/mcp_config.json
+
+# Personalized setup guides (generated locally)
+YOUR_PERSONALIZED_SETUP_GUIDE.md
+.mcp.json
+
+# Local memory service configuration (contains private endpoints/keys)
+CLAUDE_MEMORY.md
+*_reference_memories_*.json
+
+# Claude Code local settings (personal configurations)
+.claude/settings.local.json*
+scripts/.claude/settings.local.json*
+
+# Personal files
+CLAUDE_PERSONALIZED.md
+CLAUDE.local.md
+SESSION_MEMORY_2025-08-11.md
+
+# Context crystallizer artifacts
+.context-crystallizer/
+
+# Git tools
+.git-rewrite/
+
+# Node.js dependencies and artifacts
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.npm
+.mcp.json.disabled

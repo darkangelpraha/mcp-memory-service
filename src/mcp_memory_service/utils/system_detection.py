@@ -1,3 +1,17 @@
+# Copyright 2024 Heinrich Krupp
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """
 System detection utilities for hardware compatibility.
 Provides functions to detect hardware architecture, available accelerators,
@@ -123,17 +137,28 @@ class SystemInfo:
         try:
             # Try to import torch and check for CUDA
             import torch
-            return torch.cuda.is_available()
-        except ImportError:
-            # If torch is not installed, try to check for CUDA using environment
+            # Check if torch is properly installed with CUDA support
+            if hasattr(torch, 'cuda'):
+                return torch.cuda.is_available()
+            else:
+                logger.warning("PyTorch installed but appears broken (no cuda attribute)")
+                return False
+        except (ImportError, AttributeError) as e:
+            logger.debug(f"CUDA check failed: {e}")
+            # If torch is not installed or broken, try to check for CUDA using environment
             return 'CUDA_HOME' in os.environ or 'CUDA_PATH' in os.environ
             
     def _check_mps_available(self) -> bool:
         """Check if Apple MPS is available."""
         try:
             import torch
-            return hasattr(torch.backends, 'mps') and torch.backends.mps.is_available()
-        except (ImportError, AttributeError):
+            if hasattr(torch, 'backends') and hasattr(torch.backends, 'mps'):
+                return torch.backends.mps.is_available()
+            else:
+                logger.warning("PyTorch installed but appears broken (no backends attribute)")
+                return False
+        except (ImportError, AttributeError) as e:
+            logger.debug(f"MPS check failed: {e}")
             # Check for Metal support using system profiler
             try:
                 output = subprocess.check_output(
@@ -171,7 +196,11 @@ class SystemInfo:
             import pkg_resources
             pkg_resources.get_distribution('torch-directml')
             return True
-        except (ImportError, pkg_resources.DistributionNotFound):
+        except ImportError:
+            # pkg_resources not available
+            return False
+        except Exception:
+            # Any other error (including DistributionNotFound)
             return False
             
     def _detect_rosetta(self) -> bool:
@@ -295,8 +324,12 @@ def get_optimal_embedding_settings() -> Dict[str, Any]:
     }
 
 
-def print_system_diagnostics():
-    """Print detailed system diagnostics for troubleshooting."""
+def print_system_diagnostics(client_type: str = 'lm_studio'):
+    """Print detailed system diagnostics for troubleshooting, conditionally based on client."""
+    # Only print for LM Studio to avoid JSON parsing errors in Claude Desktop
+    if client_type != 'lm_studio':
+        return
+        
     system_info = get_system_info()
     
     print("\n=== System Diagnostics ===")
